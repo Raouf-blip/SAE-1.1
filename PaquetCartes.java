@@ -16,6 +16,15 @@ public class PaquetCartes {
     /**
      * Constructeur qui crée un paquet à partir d'un tableau de carte
      *
+     * @param tab tableau de cartes
+     */
+    public PaquetCartes(Carte tab[]) {
+        this.cartes = tab;
+    }
+
+    /**
+     * Constructeur qui crée un paquet à partir d'un tableau de carte
+     *
      * @param tab tableau d'entiers (qui représente la valeur des futures cartes)
      */
     public PaquetCartes(int tab[]) {
