@@ -1,4 +1,5 @@
-import static libtest.Lanceur.*;
+import static libtest.Lanceur.lancer;
+import static libtest.OutilTest.assertEquals;
 
 public class TestPileCartes {
 
@@ -17,8 +18,23 @@ public class TestPileCartes {
 
         // question 5.5
         Carte c = pile.getDerniereCarte();
-
     }
+
+    public void test_1_constructeur_c(){
+        PileCartes pile = new PileCartes(true, 30);
+        Carte c = new Carte(1);
+
+        assertEquals("la première carte devrait être 1", c, pile.getDerniereCarte());
+    }
+
+    public void test_1_constructeur_d(){
+        PileCartes pile = new PileCartes(true, 30);
+        Carte c = new Carte(100);
+
+        assertEquals("la première carte devrait être 100", c, pile.getDerniereCarte());
+    }
+
+
 
     /**
      * lancement des tests
