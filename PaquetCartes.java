@@ -150,11 +150,15 @@ public class PaquetCartes {
      * Méthode qui mélange un paquet à l'aide de la méthode piocherHasard
      */
     public void melangerPaquet(){
-        Carte[] new_tab_cartes = new Carte[0]; //creer un paquet vide
+        Carte[] new_tab_cartes = new Carte[this.cartes.length];
 
-        for (int i = 0; i < this.cartes.length-1; i++) new_tab_cartes[i] = this.piocherHasard();
+        for (int i = 0; i < this.cartes.length; i++) {
+            Carte cartePiochee = this.piocherHasard();
 
-        this.cartes = new_tab_cartes;
+            new_tab_cartes[i] = cartePiochee;
+    }
+
+    this.cartes = new_tab_cartes;
     }
 
 
