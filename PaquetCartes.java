@@ -1,5 +1,3 @@
-import java.rmi.UnexpectedException;
-import java.util.Arrays;
 import java.util.Random;
 
 public class PaquetCartes {
@@ -14,8 +12,7 @@ public class PaquetCartes {
     }
 
     /**
-     * Constructeur qui crée un paquet à partir d'un tableau de carte
-     *
+     * Constructeur qui crée un paque à partir d'un tableau de carte
      * @param tab tableau de cartes
      */
     public PaquetCartes(Carte tab[]) {
@@ -30,9 +27,11 @@ public class PaquetCartes {
     public PaquetCartes(int tab[]) {
         Carte[] new_tab_cartes = new Carte[tab.length];
 
-        for(int i = 0; i < tab.length-1; i++) {
+        for(int i = 0; i < tab.length; i++) {
             new_tab_cartes[i] = new Carte(tab[i]);
         }
+
+        this.cartes = new_tab_cartes;
     }
 
     /**
@@ -52,9 +51,11 @@ public class PaquetCartes {
      * @param place place de la carte qu'on veut voir
      * @return la carte de la place recherchée
      */
-    public Carte getCarte(int place){
-        if (place >= 0 && place < this.cartes.length) return cartes[place];
-        else return null;
+    public Carte getCarte(int place) {
+        if (place < this.getNbCartes()) {
+            return this.cartes[place];
+        }
+        return null;
     }
 
     /**
@@ -126,9 +127,9 @@ public class PaquetCartes {
      * @param max nombre de carte dans le paquet (100 = 98 cartes dans le deck)
      */
     public void remplir(int max) {
-        Carte[] new_tab_cartes = new Carte[max-3];
+        Carte[] new_tab_cartes = new Carte[max-2];
 
-        for(int i = 0; i < max-1; i++) {
+        for(int i = 0; i < new_tab_cartes.length-1; i++) {
             new_tab_cartes[i] = new Carte(i+2);
         }
 
