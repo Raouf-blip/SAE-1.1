@@ -84,7 +84,7 @@ public class TestPaquetCartes {
         Carte c1 = new Carte(tab[0]);
         PaquetCartes PC = new PaquetCartes(tab);
 
-        assertEquals("La carte n'est pas celle attendu", c1, PC.getCarte(0));
+        assertEquals("La carte n'est pas celle attendu", c1.getValeur(), PC.getCarte(0).getValeur());
     }
 
     /**
@@ -97,7 +97,7 @@ public class TestPaquetCartes {
         Carte c2 = new Carte(tab[1]);
         PaquetCartes PC = new PaquetCartes(tab);
 
-        assertEquals("La carte renvoyé n'est pas la dernière", c2, PC.getDerniereCarte());
+        assertEquals("La carte renvoyé n'est pas la dernière", c2.getValeur(), PC.getDerniereCarte().getValeur());
     }
 
     /**
@@ -143,16 +143,16 @@ public class TestPaquetCartes {
      * @Test
      */
     public void test_retirerCarte_OK(){
-        int tab[] = {2,3};
+        int tab[] = {2,3,5};
         Carte c1 = new Carte(tab[0]);
         Carte c2 = new Carte(tab[1]);
-        Carte c3 = new Carte(5);
+        Carte c3 = new Carte(tab[2]);
         PaquetCartes PC = new PaquetCartes(tab);
 
         //fonction testee
         PC.retirerCarte(2);
 
-        assertEquals("La carte à l'emplacement 2 existe toujours", c2, PC.getDerniereCarte());
+        assertEquals("La carte à l'emplacement 2 existe toujours", c2.getValeur(), PC.getDerniereCarte().getValeur());
     }
 
     /**
@@ -195,17 +195,41 @@ public class TestPaquetCartes {
         Carte c2 = new Carte(tab[1]);
         PaquetCartes PC = new PaquetCartes(tab);
 
-        assertEquals("Il faut la carte du dessus", c1, PC.prendreCarteDessus());
+        assertEquals("Il faut la carte du dessus", c1.getValeur(), PC.prendreCarteDessus().getValeur());
         assertEquals("Il doit y avoir une carte de moins", 1, PC.getNbCartes());
     }
     
+    /**
+     * Test si la chaine de caractère est conforme à la syntaxe demandée
+     * @Test
+     */
     public void test_toString(){
         int tab[] = {2,10};
         Carte c1 = new Carte(tab[0]);
         Carte c2 = new Carte(tab[1]);
         PaquetCartes PC = new PaquetCartes(tab);
 
-        assertEquals("La chaine renvoyé n'est pas bonne", "0-c2 1-c10", PC.toString());
+        assertEquals("La chaine renvoyé n'est pas bonne", "0-c2 1-c10 ", PC.toString());
+    }
+
+    /**
+     * Test si le paquet est mélangé
+     * @Test
+     */
+    public void test_melangePaquet(){
+        PaquetCartes PC = new PaquetCartes();
+        PC.remplir(100);
+        PC.melangerPaquet();
+
+        boolean same_check = false;
+        int taille = PC.getNbCartes();
+
+        for (int i = 0; i<taille; i++){
+            if (i != PC.getCarte(i).getValeur()){
+                same_check = true;
+            }
+        }
+        assertEquals("le paquet n'a pas été mélangé", true, same_check);
     }
 
     /**
