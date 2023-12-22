@@ -247,7 +247,7 @@ public class Jeu {
 
         //MESSAGE DE FIN ---------------------------------------------------
         if(this.etreFini() == -1) System.out.println("Vous avez perdu !");
-        else System.out.println("Vous avez gagné ! Bravo !");
+        else System.out.println("Vous avez gagne ! Bravo !");
 
 
         //UPDATE SCORE
@@ -279,7 +279,7 @@ public class Jeu {
                     goodrep_r = true;
                     break;
                 default :
-                    System.out.println("Mauvaise réponse.");
+                    System.out.println("Mauvaise reponse.");
             }
         }
     }
