@@ -77,7 +77,7 @@ public class Jeu {
         this.pioche = paquet;
 
         //PILES
-        int m = pioche.getNbCartes()+2;
+        int m = pioche.getNbCartes();
 
         PileCartes p1 = new PileCartes(true, m); //1
         PileCartes p2 = new PileCartes(true, m); //1
