@@ -132,41 +132,59 @@ public class Jeu {
         return -1; //Partie plus possible
     }
 
+    /**
+     * Méthode pour lancer le jeu.
+     */
     public void lancerJeu() {
-        boolean jeu = true; //état du jeu
+        // ETAPE 1: Démarrage
+        boolean jeu = true;
 
+        // ETAPE 2: Boucle du jeu
         while(jeu) {
+
             int i = 0;
+            Scanner sc = new Scanner(System.in); //création scanner
 
-            while (i < 2 && jeu) { //2 Actions
-                System.out.println(this.toString()); //elle affiche l’etat du jeu
+            while (i < 2 && jeu) { //Tour (2 actions + récupérer 2 cartes)
 
-                //QUESTIONS
-                Scanner sc = new Scanner(System.in); //création scanner
+                System.out.println(this.toString()); //Affichage de l'état du jeu
 
+                //QUESTIONS ---------------------------------------------------
                 int rep_c = 0; //réponse 1
                 int rep_p = 0; //réponse 2
+                boolean goodrep_c = false;
+                boolean goodrep_p = false;
 
-                boolean goodrep = false;
-                while (!goodrep) {
-                    System.out.println("Quelle carte poser ?"); //question 1
-                    rep_c = sc.nextInt(); //reponse
-                    if (!(rep_c >= 0 || rep_c < 4)) System.out.println("Numéro de carte invalide"); //indice mauvais
-                    else goodrep = true;
+                while (!goodrep_c) { //Question 1
+                    try {
+                        System.out.println("Quelle carte poser ?");
+                        rep_c = sc.nextInt();
+                        if (rep_c < 0 || rep_c > this.main.getNbCartes()-1) System.out.println("Numéro de carte invalide");
+                        else goodrep_c = true;
+                    }
+                    catch (java.util.InputMismatchException e) {
+                        System.out.println("Veuillez entrer un entier valide.");
+                        sc.next();
+                    }
                 }
-                goodrep = false;
 
-                while (!goodrep) {
-                    System.out.println("Quelle pile ?"); //question 2
-                    rep_p = sc.nextInt(); //reponse
-                    if (!(rep_p >= 0 || rep_p < 4)) System.out.println("Numéro de pile invalide"); //pile mauvaise
-                    else goodrep = true;
+                while (!goodrep_p) { //Question 2
+                    try {
+                        System.out.println("Quelle pile ?");
+                        rep_p = sc.nextInt();
+                        if (rep_p < 0 || rep_p > 3) System.out.println("Numéro de pile invalide");
+                        else goodrep_p = true;
+                    }
+                    catch (java.util.InputMismatchException e) {
+                        System.out.println("Veuillez entrer un entier valide.");
+                        sc.next();
+                    }
                 }
 
-                //ACTIONS
-                this.jouerCarte(rep_c, rep_p);
+                //ACTIONS 
+                this.jouerCarte(rep_c, rep_p); //Joue la carte
 
-                //VERIFICATION
+                //VERIFICATION 
                 jeu = this.etreFini() == 0;
 
                 //INCREMENTER
@@ -181,6 +199,8 @@ public class Jeu {
                 }
             }
         }
+        
+        //MESSAGE DE FIN
         if(this.etreFini() == -1) System.out.println("Vous avez perdu !");
         else System.out.println("Vous avez gagné ! Bravo !");
     }
