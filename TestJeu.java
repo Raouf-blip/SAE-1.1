@@ -131,6 +131,10 @@ public class TestJeu {
         assertEquals("Le joueur doit avoir perdu", 0, jeu.etreFini());
     }
 
+    /**
+     * Test pour check si la chaine de caractère est conforme à la syntaxe demandée
+     * @Test
+     */
     public void test_toString_OK(){
         Jeu jeu = new Jeu(10);
 
