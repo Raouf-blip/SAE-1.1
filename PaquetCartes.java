@@ -100,7 +100,7 @@ public class PaquetCartes {
      * @return carte qui à été retirée du paquet
      */
     public Carte retirerCarte(int place) {
-        if (place < 0 && place >= this.cartes.length) {
+        if (place < 0 || place >= this.cartes.length) {
             return null;
         }
 
@@ -129,7 +129,7 @@ public class PaquetCartes {
     public void remplir(int max) {
         Carte[] new_tab_cartes = new Carte[max-2];
 
-        for(int i = 0; i < new_tab_cartes.length-1; i++) {
+        for(int i = 0; i < new_tab_cartes.length; i++) {
             new_tab_cartes[i] = new Carte(i+2);
         }
 
@@ -143,7 +143,10 @@ public class PaquetCartes {
      */
     private Carte piocherHasard(){ //Usage pour la méthode melangerPaquet
         Random rnd = new Random();
-        return this.cartes[rnd.nextInt(this.cartes.length-1)];
+
+        int r_number = rnd.nextInt(this.cartes.length);
+        Carte c = this.retirerCarte(r_number);
+        return c;
     }
 
     /**
@@ -152,13 +155,14 @@ public class PaquetCartes {
     public void melangerPaquet(){
         Carte[] new_tab_cartes = new Carte[this.cartes.length];
 
-        for (int i = 0; i < this.cartes.length; i++) {
+        int taille = this.cartes.length;
+        for (int i = 0; i < taille; i++) {
             Carte cartePiochee = this.piocherHasard();
 
             new_tab_cartes[i] = cartePiochee;
-    }
+        }
 
-    this.cartes = new_tab_cartes;
+        this.cartes = new_tab_cartes;
     }
 
 
@@ -168,19 +172,25 @@ public class PaquetCartes {
      * @param c la carte placée dans le paquet
      */
     public void insererTri(Carte c) {
-
         Carte[] new_tab_cartes = new Carte[this.cartes.length+1];
 
-        int p = 0;
-        while (c.getValeur() > this.cartes[p].getValeur() && p < this.cartes.length -1) { //Recherche de la bonne place (p)
-            new_tab_cartes[p] = this.cartes[p]; //recopie des cartes
-            p++;
-        }
+        if (this.cartes.length == 0) {
+            new_tab_cartes[0] = c; // tableau vide = insérer à la position 0
+        } else {
+            int p = 0;
 
-        new_tab_cartes[p] = c; //insertion de la carte à la postion p
+            while (p < this.cartes.length && (c.getValeur() > this.cartes[p].getValeur())) {
+                // Recherche de la bonne place (p)
+                new_tab_cartes[p] = this.cartes[p]; // recopie des cartes
+                p++;
+            }
 
-        for (int i = p; i < this.cartes.length-1; i++) { //recopie des cartes restantes
-            new_tab_cartes[i+1] = this.cartes[i];
+            new_tab_cartes[p] = c; // insertion de la carte à la position p
+
+            for (int i = p; i < this.cartes.length; i++) {
+                // recopie des cartes restantes
+                new_tab_cartes[i + 1] = this.cartes[i];
+            }
         }
 
         this.cartes = new_tab_cartes;
@@ -192,7 +202,7 @@ public class PaquetCartes {
      * @return carte prise
      */
     public Carte prendreCarteDessus() {
-        return retirerCarte(0);
+        return this.retirerCarte(0);
     }
 
 
@@ -203,11 +213,11 @@ public class PaquetCartes {
         String retour = "";
 
         if (this.cartes.length == 0) retour += "Aucune carte";
-                else {
-                    for (int i = 0; i < this.cartes.length; i++){
-                        retour += i + "-c"+ this.cartes[i].getValeur()+" ";
-                    }
-                }
+        else {
+            for (int i = 0; i < this.cartes.length; i++){
+                retour += i + "-c"+ this.cartes[i].getValeur()+" ";
+            }
+        }
 
         return retour;
     }
